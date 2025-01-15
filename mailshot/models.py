@@ -1,19 +1,20 @@
 from django.db import models
 
-class Receiver(models.Model):
+
+class Recipient(models.Model):
     email = models.CharField(max_length=30, unique=True, verbose_name="Электронная почта")
     name = models.CharField(max_length=100, verbose_name="ФИО получателя")
     comment = models.TextField(verbose_name="Комментарий")
 
-    # def __str__(self):
-    #     return self.email
+    def __str__(self):
+        return self.email
 
 class Message(models.Model):
     theme = models.CharField(max_length=50, verbose_name="Тема письма")
     content = models.TextField(verbose_name="Тело письма")
 
-    # def __str__(self):
-    #     return self.theme
+    def __str__(self):
+        return self.theme
 
 class Mailshot(models.Model):
     STATUS = (
@@ -25,10 +26,10 @@ class Mailshot(models.Model):
     last_mailshot = models.DateTimeField(verbose_name="Окончание отправки")
     status = models.CharField(max_length=50, choices=STATUS, verbose_name="Статус")
     message = models.ForeignKey("Message", on_delete=models.CASCADE)
-    receivers = models.ManyToManyField("Receiver")
+    receivers = models.ManyToManyField("Recipient")
 
     # def __str__(self):
-    #     return self.theme
+    #     return
 
 class MailshotTry(models.Model):
     STATUS = (
@@ -41,5 +42,5 @@ class MailshotTry(models.Model):
     response = models.TextField(verbose_name="Ответ сервера")
     mailshot = models.ForeignKey("Mailshot", on_delete=models.CASCADE)
 
-    # def __str__(self):
-    #     return self.theme
+    def __str__(self):
+        return self.status

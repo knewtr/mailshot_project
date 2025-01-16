@@ -2,12 +2,15 @@ from django.db import models
 
 
 class Recipient(models.Model):
-    email = models.CharField(max_length=30, unique=True, verbose_name="Электронная почта")
+    email = models.CharField(
+        max_length=30, unique=True, verbose_name="Электронная почта"
+    )
     name = models.CharField(max_length=100, verbose_name="ФИО получателя")
     comment = models.TextField(verbose_name="Комментарий")
 
     def __str__(self):
         return self.email
+
 
 class Message(models.Model):
     theme = models.CharField(max_length=50, verbose_name="Тема письма")
@@ -15,6 +18,7 @@ class Message(models.Model):
 
     def __str__(self):
         return self.theme
+
 
 class Mailshot(models.Model):
     STATUS = (
@@ -30,6 +34,7 @@ class Mailshot(models.Model):
 
     # def __str__(self):
     #     return
+
 
 class MailshotTry(models.Model):
     STATUS = (

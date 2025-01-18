@@ -5,7 +5,7 @@ from django.urls import path, include
 
 urlpatterns = [
     path("admin/", admin.site.urls),
-    path("", include("mailshot.urls", namespace="mailshot")),
+    path("", include("mailshot.urls", namespace="recipient_list")),
 ]
 
 if settings.DEBUG:

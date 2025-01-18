@@ -8,6 +8,10 @@ class Recipient(models.Model):
     name = models.CharField(max_length=100, verbose_name="ФИО получателя")
     comment = models.TextField(verbose_name="Комментарий")
 
+    class Meta:
+        verbose_name = "получатель"
+        verbose_name_plural = "получатели"
+
     def __str__(self):
         return self.email
 
@@ -15,6 +19,10 @@ class Recipient(models.Model):
 class Message(models.Model):
     theme = models.CharField(max_length=50, verbose_name="Тема письма")
     content = models.TextField(verbose_name="Тело письма")
+
+    class Meta:
+        verbose_name = "сообщение"
+        verbose_name_plural = "сообщения"
 
     def __str__(self):
         return self.theme

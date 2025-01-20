@@ -18,6 +18,7 @@ class RecipientCreateView(CreateView):
 
 class RecipientListView(ListView):
     model = Recipient
+    template_name = "mailshot/recipient_list.html"
 
 
 class RecipientDetailView(DetailView):
@@ -34,4 +35,5 @@ class RecipientUpdateView(UpdateView):
 
 class RecipientDeleteView(DeleteView):
     model = Recipient
+    template_name = 'mailshot/recipient_confirm_delete.html'
     success_url = reverse_lazy("mailshot:recipient_list")

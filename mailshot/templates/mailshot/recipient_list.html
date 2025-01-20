@@ -11,7 +11,7 @@
                     <div class="btn-group">
                       <a class="btn btn-primary" href="{% url 'mailshot:recipient_detail' recipient.pk %}" role="button">Посмотреть</a>
                       <a class="btn btn-primary" href="{% url 'mailshot:recipient_update' recipient.pk %}" role="button">Редактировать</a>
-                      <a class="btn btn-danger" href="{% url 'mailshot:recipient_delete' recipient.pk %}" role="button">Удалить</a>
+                      <a class="btn btn-danger" href="{% url 'mailshot:recipient_confirm_delete' recipient.pk %}" role="button">Удалить</a>
                     </div>
                 </div>
             </div>

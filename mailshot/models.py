@@ -44,7 +44,7 @@ class Mailshot(models.Model):
     #     return
 
 
-class MailshotTry(models.Model):
+class Attempt(models.Model):
     STATUS = (
         ("1", "Успешно"),
         ("2", "Не успешно"),

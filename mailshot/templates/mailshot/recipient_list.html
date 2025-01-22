@@ -1,21 +1,28 @@
 {% extends 'mailshot/base.html' %}
+{% load static %}
 {% block content %}
-<div class="list-unstyled ps-0">
-    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
-        {% for recipient in object_list %}
-            <div class="card-body">
-                <p class="card-text">{{ recipient.name }}</p>
-                <p class="card-text">{{ recipient.email }}</p>
-                <p class="card-text">{{ recipient.comment }}</p>
-                <div class="d-flex justify-content-between align-items-center">
-                    <div class="btn-group">
-                      <a class="btn btn-primary" href="{% url 'mailshot:recipient_detail' recipient.pk %}" role="button">Посмотреть</a>
-                      <a class="btn btn-primary" href="{% url 'mailshot:recipient_update' recipient.pk %}" role="button">Редактировать</a>
-                      <a class="btn btn-danger" href="{% url 'mailshot:recipient_confirm_delete' recipient.pk %}" role="button">Удалить</a>
+<head>
+    <title>Список получателей</title>
+    <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet">
+</head>
+<body>
+    <div class="list-unstyled ps-0">
+        <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+            {% for recipient in object_list %}
+                <div class="card-body">
+                    <p class="card-text">{{ recipient.name }}</p>
+                    <p class="card-text">{{ recipient.email }}</p>
+                    <p class="card-text">{{ recipient.comment }}</p>
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div class="btn-group">
+                          <a class="btn btn-primary" href="{% url 'mailshot:recipient_detail' recipient.pk %}" role="button">Посмотреть</a>
+                          <a class="btn btn-primary" href="{% url 'mailshot:recipient_update' recipient.pk %}" role="button">Редактировать</a>
+                          <a class="btn btn-danger" href="{% url 'mailshot:recipient_confirm_delete' recipient.pk %}" role="button">Удалить</a>
+                        </div>
                     </div>
                 </div>
-            </div>
-        {% endfor %}
+            {% endfor %}
+        </div>
     </div>
-</div>
+</body>
 {% endblock %}

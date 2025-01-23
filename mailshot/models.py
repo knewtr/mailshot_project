@@ -38,7 +38,7 @@ class Mailshot(models.Model):
     last_mailshot = models.DateTimeField(verbose_name="Окончание отправки")
     status = models.CharField(max_length=50, choices=STATUS, verbose_name="Статус")
     message = models.ForeignKey("Message", on_delete=models.CASCADE)
-    receivers = models.ManyToManyField("Recipient")
+    recipient = models.ManyToManyField("Recipient")
 
     # def __str__(self):
     #     return

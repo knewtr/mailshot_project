@@ -37,3 +37,33 @@ class RecipientDeleteView(DeleteView):
     model = Recipient
     template_name = 'mailshot/recipient_confirm_delete.html'
     success_url = reverse_lazy("mailshot:recipient_list")
+
+
+
+class MessageCreateView(CreateView):
+    model = Message
+    fields = ("theme", "content")
+    success_url = reverse_lazy("mailshot:message_list")
+
+
+class MessageListView(ListView):
+    model = Message
+    template_name = "mailshot/message_list.html"
+
+
+class MessageDetailView(DetailView):
+    model = Message
+
+
+class MessageUpdateView(UpdateView):
+    model = Message
+    fields = ("theme", "content")
+
+    def get_success_url(self):
+        return reverse_lazy("mailshot:message_detail", kwargs={"pk": self.object.pk})
+
+
+class MessageDeleteView(DeleteView):
+    model = Message
+    template_name = 'mailshot/message_confirm_delete.html'
+    success_url = reverse_lazy("mailshot:message_list")

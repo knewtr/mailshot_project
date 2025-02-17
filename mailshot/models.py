@@ -1,4 +1,5 @@
 from django.db import models
+from django.core.mail import send_mail
 
 
 class Recipient(models.Model):
@@ -66,5 +67,3 @@ class Attempt(models.Model):
     response = models.TextField(verbose_name="Ответ сервера")
     mailshot = models.ForeignKey("Mailshot", on_delete=models.CASCADE)
 
-    # def __str__(self):
-    #     return self.status

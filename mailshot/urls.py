@@ -31,7 +31,7 @@ urlpatterns = [
         name="recipient_confirm_delete",
     ),
     path("message/create/", MessageCreateView.as_view(), name="message_create"),
-    path("message/list/", MessageListView.as_view(), name="message_list"),
+    path("", MessageListView.as_view(), name="message_list"),
     path("message/<int:pk>/", MessageDetailView.as_view(), name="message_detail"),
     path(
         "message/<int:pk>/update/",
@@ -43,5 +43,4 @@ urlpatterns = [
         MessageDeleteView.as_view(),
         name="message_confirm_delete",
     ),
-    path("", home_view, name="home" )
 ]

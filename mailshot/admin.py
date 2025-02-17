@@ -17,6 +17,6 @@ class MessageAdmin(admin.ModelAdmin):
 
 @admin.register(Mailshot)
 class MailshotAdmin(admin.ModelAdmin):
-    list_display = ("first_mailshot", "last_mailshot", "status", "message", "recipient")
+    list_display = ("message",)
     list_filter = ("status",)
     search_field = ("message",)

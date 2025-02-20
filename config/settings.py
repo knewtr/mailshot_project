@@ -1,14 +1,16 @@
 import os
 from pathlib import Path
+from dotenv import load_dotenv
+load_dotenv(override=True)
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 
 
-SECRET_KEY = "django-insecure-+_fpgv3gob^#2d)c4a1mji@=3tyl94po^t%ov*&!&__&7a!6v!"
+SECRET_KEY = os.getenv("SECRET_KEY")
 
 
-DEBUG = True
+DEBUG = os.getenv("DEBUG")
 
 ALLOWED_HOSTS = []
 
@@ -57,22 +59,19 @@ TEMPLATES = [
 WSGI_APPLICATION = "config.wsgi.application"
 
 
-
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.postgresql_psycopg2",
-        "NAME": os.getenv("NAME"),
-        "USER": os.getenv("USER"),
-        "PASSWORD": os.getenv("DATABASE_PASSWORD"),
-        "HOST": os.getenv("HOST"),
-        "PORT": os.getenv("PORT"),
+        "NAME" : os.getenv("NAME"),
+        "USER" : os.getenv("USER"),
+        "PASSWORD" : os.getenv("PASSWORD"),
+        "HOST" : os.getenv("HOST"),
+        "PORT" : os.getenv("PORT"),
         "OPTIONS": {
             "client_encoding": "utf8",
         },
     }
 }
-
-
 
 AUTH_PASSWORD_VALIDATORS = [
     {

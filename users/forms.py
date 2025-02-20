@@ -8,13 +8,13 @@ class UserRegisterForm(UserCreationForm):
     phone_number = forms.CharField(
         max_length=15,
         required=False,
-        help_text="Введите номер телефона (необязательно).",
+        help_text="Введите номер телефона (необязательно)",
     )
     country = forms.CharField(
-        max_length=50, required=False, help_text="Введите страну (необязательно)."
+        max_length=50, required=False, help_text="Введите страну (необязательно)"
     )
     avatar = forms.ImageField(
-        required=False, help_text="Загрузите аватар (необязательно)."
+        required=False, help_text="Загрузите аватар (необязательно)"
     )
 
     class Meta(UserCreationForm.Meta):

@@ -3,6 +3,7 @@ from django.forms import BooleanField, ModelForm
 
 from mailshot.models import Message
 
+
 class MessageFormMixin:
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)

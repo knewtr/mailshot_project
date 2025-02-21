@@ -1,5 +1,5 @@
-from django.db import models
 from django.core.mail import send_mail
+from django.db import models
 
 
 class Recipient(models.Model):
@@ -30,9 +30,9 @@ class Message(models.Model):
 
 
 class Mailshot(models.Model):
-    COMPLETED = 'completed'
-    CREATED = 'created'
-    STARTED = 'started'
+    COMPLETED = "completed"
+    CREATED = "created"
+    STARTED = "started"
 
     STATUS_CHOICES = (
         (CREATED, "Создана"),
@@ -41,21 +41,23 @@ class Mailshot(models.Model):
     )
     first_mailshot = models.DateTimeField(verbose_name="Первая отправка")
     last_mailshot = models.DateTimeField(verbose_name="Окончание отправки")
-    status = models.CharField(max_length=10, choices=STATUS_CHOICES, verbose_name="Статус")
+    status = models.CharField(
+        max_length=10, choices=STATUS_CHOICES, verbose_name="Статус"
+    )
     message = models.ForeignKey("Message", on_delete=models.CASCADE)
     recipient = models.ManyToManyField("Recipient")
 
     class Meta:
-        verbose_name = 'рассылка'
-        verbose_name_plural = 'рассылки'
+        verbose_name = "рассылка"
+        verbose_name_plural = "рассылки"
 
     def __str__(self):
-        return f'Отправляем + {self.message}'
+        return f"Отправляем + {self.message}"
 
 
 class Attempt(models.Model):
-    SUCCESS = 'success'
-    FAILURE = 'failure'
+    SUCCESS = "success"
+    FAILURE = "failure"
 
     STATUS_CHOICES = (
         (SUCCESS, "Успешно"),
@@ -63,7 +65,8 @@ class Attempt(models.Model):
     )
 
     try_time = models.DateTimeField(verbose_name="Время попытки")
-    status = models.CharField(max_length=20, choices=STATUS_CHOICES, verbose_name="Статус")
+    status = models.CharField(
+        max_length=20, choices=STATUS_CHOICES, verbose_name="Статус"
+    )
     response = models.TextField(verbose_name="Ответ сервера")
     mailshot = models.ForeignKey("Mailshot", on_delete=models.CASCADE)
-

@@ -1,10 +1,11 @@
 import os
 from pathlib import Path
+
 from dotenv import load_dotenv
+
 load_dotenv(override=True)
 
 BASE_DIR = Path(__file__).resolve().parent.parent
-
 
 
 SECRET_KEY = os.getenv("SECRET_KEY")
@@ -15,8 +16,6 @@ DEBUG = os.getenv("DEBUG")
 ALLOWED_HOSTS = []
 
 
-
-
 INSTALLED_APPS = [
     "django.contrib.admin",
     "django.contrib.auth",
@@ -25,7 +24,7 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     "mailshot",
-    "users"
+    "users",
 ]
 
 MIDDLEWARE = [
@@ -62,11 +61,11 @@ WSGI_APPLICATION = "config.wsgi.application"
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.postgresql_psycopg2",
-        "NAME" : os.getenv("NAME"),
-        "USER" : os.getenv("USER"),
-        "PASSWORD" : os.getenv("PASSWORD"),
-        "HOST" : os.getenv("HOST"),
-        "PORT" : os.getenv("PORT"),
+        "NAME": os.getenv("NAME"),
+        "USER": os.getenv("USER"),
+        "PASSWORD": os.getenv("PASSWORD"),
+        "HOST": os.getenv("HOST"),
+        "PORT": os.getenv("PORT"),
         "OPTIONS": {
             "client_encoding": "utf8",
         },
@@ -89,7 +88,6 @@ AUTH_PASSWORD_VALIDATORS = [
 ]
 
 
-
 LANGUAGE_CODE = "en-us"
 
 TIME_ZONE = "UTC"
@@ -99,10 +97,8 @@ USE_I18N = True
 USE_TZ = True
 
 
-
 STATIC_URL = "/static/"
-STATICFILES_DIRS = (os.path.join(BASE_DIR, 'static'),)
-
+STATICFILES_DIRS = (os.path.join(BASE_DIR, "static"),)
 
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"

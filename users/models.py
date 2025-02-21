@@ -27,7 +27,6 @@ class User(AbstractUser):
         help_text="Загрузите аватар",
     )
 
-
     USERNAME_FIELD = "email"
     REQUIRED_FIELDS = []
 

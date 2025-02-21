@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from mailshot.models import Recipient, Message, Mailshot
+from mailshot.models import Mailshot, Message, Recipient
 
 
 @admin.register(Recipient)
@@ -9,11 +9,13 @@ class RecipientAdmin(admin.ModelAdmin):
     search_fields = ("name",)
     ordering = ("email",)
 
+
 @admin.register(Message)
 class MessageAdmin(admin.ModelAdmin):
     list_display = ("theme", "content")
     search_fields = ("theme",)
     ordering = ("theme",)
+
 
 @admin.register(Mailshot)
 class MailshotAdmin(admin.ModelAdmin):

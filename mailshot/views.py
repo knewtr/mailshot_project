@@ -1,11 +1,6 @@
 from django.urls import reverse_lazy
-from django.views.generic import (
-    CreateView,
-    DeleteView,
-    DetailView,
-    ListView,
-    UpdateView,
-)
+from django.views.generic import (CreateView, DeleteView, DetailView, ListView,
+                                  UpdateView)
 
 from mailshot.models import Mailshot, Message, Recipient
 
@@ -35,9 +30,8 @@ class RecipientUpdateView(UpdateView):
 
 class RecipientDeleteView(DeleteView):
     model = Recipient
-    template_name = 'mailshot/recipient_confirm_delete.html'
+    template_name = "mailshot/recipient_confirm_delete.html"
     success_url = reverse_lazy("mailshot:recipient_list")
-
 
 
 class MessageCreateView(CreateView):
@@ -62,11 +56,11 @@ class MessageUpdateView(UpdateView):
     def get_success_url(self):
         return reverse_lazy("mailshot:message_detail", kwargs={"pk": self.object.pk})
 
+
 class MessageDeleteView(DeleteView):
     model = Message
-    template_name = 'mailshot/message_confirm_delete.html'
+    template_name = "mailshot/message_confirm_delete.html"
     success_url = reverse_lazy("mailshot:message_list")
-
 
 
 class MailshotCreateView(CreateView):
@@ -74,12 +68,15 @@ class MailshotCreateView(CreateView):
     fields = ("first_mailshot", "last_mailshot", "status", "message", "recipient")
     success_url = reverse_lazy("mailshot:mailshot_list")
 
+
 class MailshotListView(ListView):
     model = Message
     template_name = "mailshot/mailshot_list.html"
 
+
 class MailshotDetailView(DetailView):
     model = Message
+
 
 class MailshotUpdateView(UpdateView):
     model = Message
@@ -88,7 +85,8 @@ class MailshotUpdateView(UpdateView):
     def get_success_url(self):
         return reverse_lazy("mailshot:mailshot_detail", kwargs={"pk": self.object.pk})
 
+
 class MailshotDeleteView(DeleteView):
     model = Message
-    template_name = 'mailshot/mailshot_confirm_delete.html'
+    template_name = "mailshot/mailshot_confirm_delete.html"
     success_url = reverse_lazy("mailshot:mailshot_list")

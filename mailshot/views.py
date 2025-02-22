@@ -1,8 +1,17 @@
+from django.shortcuts import render
 from django.urls import reverse_lazy
 from django.views.generic import (CreateView, DeleteView, DetailView, ListView,
                                   UpdateView)
 
 from mailshot.models import Mailshot, Message, Recipient
+
+
+def home_view(request):
+    messages = Message.objects.all()
+    context = {
+        "meassages": messages,
+    }
+    return render(request, "mailshot/home.html", context)
 
 
 class RecipientCreateView(CreateView):

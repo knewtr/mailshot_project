@@ -5,11 +5,12 @@ from mailshot.views import (MessageCreateView, MessageDeleteView,
                             MessageDetailView, MessageListView,
                             MessageUpdateView, RecipientCreateView,
                             RecipientDeleteView, RecipientDetailView,
-                            RecipientListView, RecipientUpdateView)
+                            RecipientListView, RecipientUpdateView, home_view)
 
 app_name = MailshotConfig.name
 
 urlpatterns = [
+    path("", home_view, name="home"),
     path("recipient/create/", RecipientCreateView.as_view(), name="recipient_create"),
     path("recipient/list/", RecipientListView.as_view(), name="recipient_list"),
     path("recipient/<int:pk>/", RecipientDetailView.as_view(), name="recipient_detail"),
@@ -24,7 +25,7 @@ urlpatterns = [
         name="recipient_confirm_delete",
     ),
     path("message/create/", MessageCreateView.as_view(), name="message_create"),
-    path("", MessageListView.as_view(), name="message_list"),
+    path("message/list/", MessageListView.as_view(), name="message_list"),
     path("message/<int:pk>/", MessageDetailView.as_view(), name="message_detail"),
     path(
         "message/<int:pk>/update/",

@@ -34,3 +34,8 @@ def email_verification(request, token):
     user = get_object_or_404(User, token=token)
     user.is_active = True
     return redirect(reverse("user:login"))
+
+class UserUpdateView(UpdateView):
+    model = User
+    form_class = UserUpdateForm
+    success_url = reverse_lazy("mailshot:home")

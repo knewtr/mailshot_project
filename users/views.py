@@ -3,10 +3,10 @@ import secrets
 from django.core.mail import send_mail
 from django.shortcuts import get_object_or_404
 from django.urls import reverse_lazy
-from django.views.generic import CreateView
+from django.views.generic import CreateView, UpdateView, ListView
 
 from config.settings import EMAIL_HOST_USER
-from users.forms import UserRegisterForm
+from users.forms import UserRegisterForm, UserUpdateForm
 from users.models import User
 
 
@@ -39,3 +39,12 @@ class UserUpdateView(UpdateView):
     model = User
     form_class = UserUpdateForm
     success_url = reverse_lazy("mailshot:home")
+
+def view_profile(request):
+    user = request.user
+    context = {'user':user}
+    return render(request, context, template_name = 'mailshot/profile.html')
+
+class UserListView(ListView):
+    model = User
+    template_name = "mailshot/user_list.html"

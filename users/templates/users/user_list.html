@@ -1,0 +1,30 @@
+{% extends 'mailshot/base.html' %}
+{% load static %}
+{% block content %}
+<head>
+    <title>Пользователи</title>
+    <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet">
+</head>
+<body>
+    <div class="list-unstyled ps-0">
+        <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+            {% for user in object_list %}
+                <div class="card shadow-sm">
+                    <img src="{{ user.avatar | media_filter }}">
+                    <div class="card-body">
+                        <p class="card-text">{{ user.phone_number }}</p>
+                        <p class="card-text">{{ user.country }}</p>
+                        <p class="card-text">{{ user.country }}</p>
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div class="btn-group">
+                          <a class="btn btn-primary" href="{% url 'users:users_detail' user.pk %}" role="button">Посмотреть профиль</a>
+                          <a class="btn btn-primary" href="{% url 'users:users_update' user.pk %}" role="button">Редактировать профиль</a>
+                          <a class="btn btn-danger" href="{% url 'users:users_confirm_block' user.pk %}" role="button">Блокировать пользователя</a>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+</body>
+{% endblock %}

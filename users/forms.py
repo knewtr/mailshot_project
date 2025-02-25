@@ -1,6 +1,6 @@
 from django import forms
+from django.contrib.auth.forms import UserChangeForm, UserCreationForm
 from django.forms import ModelForm
-from django.contrib.auth.forms import UserCreationForm, UserChangeForm
 
 from users.models import User
 
@@ -35,4 +35,4 @@ class UserUpdateForm(ModelForm):
 
     class Meta(UserChangeForm):
         model = User
-        fields = ('phone_number', 'country', 'avatar')
+        fields = ("phone_number", "country", "avatar")

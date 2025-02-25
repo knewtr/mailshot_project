@@ -1,3 +1,4 @@
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import render
 from django.urls import reverse_lazy
 from django.views.generic import (CreateView, DeleteView, DetailView, ListView,
@@ -14,22 +15,22 @@ def home_view(request):
     return render(request, "mailshot/home.html", context)
 
 
-class RecipientCreateView(CreateView):
+class RecipientCreateView(LoginRequiredMixin, CreateView):
     model = Recipient
     fields = ("email", "name", "comment")
     success_url = reverse_lazy("mailshot:recipient_list")
 
 
-class RecipientListView(ListView):
+class RecipientListView(LoginRequiredMixin, ListView):
     model = Recipient
     template_name = "mailshot/recipient_list.html"
 
 
-class RecipientDetailView(DetailView):
+class RecipientDetailView(LoginRequiredMixin, DetailView):
     model = Recipient
 
 
-class RecipientUpdateView(UpdateView):
+class RecipientUpdateView(LoginRequiredMixin, UpdateView):
     model = Recipient
     fields = ("email", "name", "comment")
 
@@ -37,28 +38,28 @@ class RecipientUpdateView(UpdateView):
         return reverse_lazy("mailshot:recipient_detail", kwargs={"pk": self.object.pk})
 
 
-class RecipientDeleteView(DeleteView):
+class RecipientDeleteView(LoginRequiredMixin, DeleteView):
     model = Recipient
     template_name = "mailshot/recipient_confirm_delete.html"
     success_url = reverse_lazy("mailshot:recipient_list")
 
 
-class MessageCreateView(CreateView):
+class MessageCreateView(LoginRequiredMixin, CreateView):
     model = Message
     fields = ("theme", "content")
     success_url = reverse_lazy("mailshot:message_list")
 
 
-class MessageListView(ListView):
+class MessageListView(LoginRequiredMixin, ListView):
     model = Message
     template_name = "mailshot/message_list.html"
 
 
-class MessageDetailView(DetailView):
+class MessageDetailView(LoginRequiredMixin, DetailView):
     model = Message
 
 
-class MessageUpdateView(UpdateView):
+class MessageUpdateView(LoginRequiredMixin, UpdateView):
     model = Message
     fields = ("theme", "content")
 
@@ -66,28 +67,28 @@ class MessageUpdateView(UpdateView):
         return reverse_lazy("mailshot:message_detail", kwargs={"pk": self.object.pk})
 
 
-class MessageDeleteView(DeleteView):
+class MessageDeleteView(LoginRequiredMixin, DeleteView):
     model = Message
     template_name = "mailshot/message_confirm_delete.html"
     success_url = reverse_lazy("mailshot:message_list")
 
 
-class MailshotCreateView(CreateView):
+class MailshotCreateView(LoginRequiredMixin, CreateView):
     model = Message
     fields = ("first_mailshot", "last_mailshot", "status", "message", "recipient")
     success_url = reverse_lazy("mailshot:mailshot_list")
 
 
-class MailshotListView(ListView):
+class MailshotListView(LoginRequiredMixin, ListView):
     model = Message
     template_name = "mailshot/mailshot_list.html"
 
 
-class MailshotDetailView(DetailView):
+class MailshotDetailView(LoginRequiredMixin, DetailView):
     model = Message
 
 
-class MailshotUpdateView(UpdateView):
+class MailshotUpdateView(LoginRequiredMixin, UpdateView):
     model = Message
     fields = ("theme", "content")
 
@@ -95,7 +96,7 @@ class MailshotUpdateView(UpdateView):
         return reverse_lazy("mailshot:mailshot_detail", kwargs={"pk": self.object.pk})
 
 
-class MailshotDeleteView(DeleteView):
+class MailshotDeleteView(LoginRequiredMixin, DeleteView):
     model = Message
     template_name = "mailshot/mailshot_confirm_delete.html"
     success_url = reverse_lazy("mailshot:mailshot_list")

@@ -1,9 +1,10 @@
 import secrets
 
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.core.mail import send_mail
 from django.shortcuts import get_object_or_404
 from django.urls import reverse_lazy
-from django.views.generic import CreateView, UpdateView, ListView
+from django.views.generic import CreateView, ListView, UpdateView
 
 from config.settings import EMAIL_HOST_USER
 from users.forms import UserRegisterForm, UserUpdateForm
@@ -35,16 +36,19 @@ def email_verification(request, token):
     user.is_active = True
     return redirect(reverse("user:login"))
 
-class UserUpdateView(UpdateView):
+
+class UserUpdateView(LoginRequiredMixin, UpdateView):
     model = User
     form_class = UserUpdateForm
     success_url = reverse_lazy("mailshot:home")
 
+
 def view_profile(request):
     user = request.user
-    context = {'user':user}
-    return render(request, context, template_name = 'mailshot/profile.html')
+    context = {"user": user}
+    return render(request, context, template_name="mailshot/profile.html")
 
-class UserListView(ListView):
+
+class UserListView(LoginRequiredMixin, ListView):
     model = User
     template_name = "mailshot/user_list.html"

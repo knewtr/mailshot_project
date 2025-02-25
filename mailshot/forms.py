@@ -1,10 +1,10 @@
 from django.core.exceptions import ValidationError
 from django.forms import BooleanField, ModelForm
 
-from mailshot.models import Message
+from mailshot.models import Message, Recipient, Mailshot
 
 
-class MessageFormMixin:
+class StyleFormMixin:
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         for field_name, field in self.fields.items():
@@ -14,10 +14,19 @@ class MessageFormMixin:
                 field.widget.attrs["class"] = "form-control"
 
 
-class MessageForm(MessageFormMixin, ModelForm):
+class MessageForm(StyleFormMixin, ModelForm):
     class Meta:
         model = Message
-        fields = [
-            "title",
-            "content",
-        ]
+        fields = ("title", "content")
+
+
+class RecipientForm(StyleFormMixin, ModelForm):
+    class Meta:
+        model = Recipient
+        fields = ("email", "name", "comment")
+
+
+class MailshotForm(StyleFormMixin, ModelForm):
+    class Meta:
+        model = Mailshot
+        fields = ("first_mailshot", "last_mailshot", "status", "message", "recipient")

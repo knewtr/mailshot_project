@@ -5,10 +5,13 @@ from users.models import User
 
 class Recipient(models.Model):
     email = models.CharField(
-        max_length=30, unique=True, verbose_name="Электронная почта")
+        max_length=30, unique=True, verbose_name="Электронная почта"
+    )
     name = models.CharField(max_length=100, verbose_name="ФИО получателя")
     comment = models.TextField(verbose_name="Комментарий")
-    owner = models.ForeignKey(User, verbose_name="Владелец", on_delete=models.SET_NULL, blank=True, null=True)
+    owner = models.ForeignKey(
+        User, verbose_name="Владелец", on_delete=models.SET_NULL, blank=True, null=True
+    )
 
     class Meta:
         verbose_name = "получатель"
@@ -21,7 +24,9 @@ class Recipient(models.Model):
 class Message(models.Model):
     theme = models.CharField(max_length=50, verbose_name="Тема письма")
     content = models.TextField(verbose_name="Тело письма")
-    owner = models.ForeignKey(User, verbose_name="Владелец", on_delete=models.SET_NULL, blank=True, null=True)
+    owner = models.ForeignKey(
+        User, verbose_name="Владелец", on_delete=models.SET_NULL, blank=True, null=True
+    )
 
     class Meta:
         verbose_name = "сообщение"
@@ -48,7 +53,9 @@ class Mailshot(models.Model):
     )
     message = models.ForeignKey("Message", on_delete=models.CASCADE)
     recipient = models.ManyToManyField("Recipient")
-    owner = models.ForeignKey(User, verbose_name="Владелец", on_delete=models.SET_NULL, blank=True, null=True)
+    owner = models.ForeignKey(
+        User, verbose_name="Владелец", on_delete=models.SET_NULL, blank=True, null=True
+    )
 
     class Meta:
         verbose_name = "рассылка"

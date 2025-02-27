@@ -7,9 +7,10 @@ from django.views.generic import (
     DetailView,
     ListView,
     UpdateView,
+    TemplateView
 )
 
-from mailshot.models import Mailshot, Message, Recipient
+from mailshot.models import Mailshot, Message, Recipient, Attempt
 
 
 def home_view(request):
@@ -105,3 +106,31 @@ class MailshotDeleteView(LoginRequiredMixin, DeleteView):
     model = Message
     template_name = "mailshot/mailshot_confirm_delete.html"
     success_url = reverse_lazy("mailshot:mailshot_list")
+
+class StatisticsView(TemplateView):
+    template_name = "mailshot/statistics.html"
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        user = self.request.user
+        mailshots = Mailshot.objects.filter(owner=user)
+        attempts = Attempt.objects.filter(mailshot__in=mailshots)
+        print(attempts)
+
+        successful = 0
+        failed = 0
+        mailshot_count = 0
+
+        for attempt in attempts:
+            if attempt.status == 'success':
+                successful += 1
+                mailshot_count += attempt.mailshot.recipients.count()
+            if attempt.status == 'failure':
+                failed += 1
+
+        context['successful'] = successful
+        context['failed'] = failed
+        context['mailshot_count'] = mailshot_count
+        context['attempts'] = attempts
+        return context
+

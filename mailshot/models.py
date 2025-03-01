@@ -1,5 +1,5 @@
-from django.core.mail import send_mail
 from django.db import models
+
 from users.models import User
 
 
@@ -16,6 +16,9 @@ class Recipient(models.Model):
     class Meta:
         verbose_name = "получатель"
         verbose_name_plural = "получатели"
+        permissions = [
+            ("can_view_recipient_list", "Can view recipient list"),
+        ]
 
     def __str__(self):
         return self.email
@@ -31,6 +34,9 @@ class Message(models.Model):
     class Meta:
         verbose_name = "сообщение"
         verbose_name_plural = "сообщения"
+        permissions = [
+            ("can_view_message_list", "Can view message list"),
+        ]
 
     def __str__(self):
         return self.theme
@@ -60,6 +66,9 @@ class Mailshot(models.Model):
     class Meta:
         verbose_name = "рассылка"
         verbose_name_plural = "рассылки"
+        permissions = [
+            ("can_stop_mailshot", "Can stop mailshot"),
+        ]
 
     def __str__(self):
         return f"Отправляем + {self.message}"

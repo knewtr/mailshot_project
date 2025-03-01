@@ -1,21 +1,12 @@
 from django.urls import path
 
 from mailshot.apps import MailshotConfig
-from mailshot.views import (
-    MailshotListView,
-    MessageCreateView,
-    MessageDeleteView,
-    MessageDetailView,
-    MessageListView,
-    MessageUpdateView,
-    RecipientCreateView,
-    RecipientDeleteView,
-    RecipientDetailView,
-    RecipientListView,
-    RecipientUpdateView,
-    home_view,
-    StatisticsView,
-)
+from mailshot.views import (MailshotListView, MessageCreateView,
+                            MessageDeleteView, MessageDetailView,
+                            MessageListView, MessageUpdateView,
+                            RecipientCreateView, RecipientDeleteView,
+                            RecipientDetailView, RecipientListView,
+                            RecipientUpdateView, StatisticsView, home_view)
 
 app_name = MailshotConfig.name
 

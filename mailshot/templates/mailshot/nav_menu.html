@@ -26,6 +26,8 @@
           <ul class="list-unstyled">
             <li><a href="{% url 'mailshot:home' %}" class="text-white">Главная</a></li>
             {% if user.is_authenticated %}
+            <li><a href="{% url 'users:profile' %}" class="text-white">Профиль</a></li>
+            <li><a href="{% url 'users:user_update' user.pk %}" class="text-white">Редактировать профиль</a></li>
             <li>
                 <form method="post" action="{% url 'users:logout' %}" style="display:inline">
                     {% csrf_token %}

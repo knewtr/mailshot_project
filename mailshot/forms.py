@@ -1,7 +1,6 @@
-from django.core.exceptions import ValidationError
 from django.forms import BooleanField, ModelForm
 
-from mailshot.models import Message, Recipient, Mailshot
+from mailshot.models import Mailshot, Message, Recipient
 
 
 class StyleFormMixin:

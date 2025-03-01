@@ -1,5 +1,7 @@
 from django.core.mail import send_mail
 from django.core.management.base import BaseCommand
+from django.db.models import Q
+from django.utils import timezone
 
 from config.settings import EMAIL_HOST_USER
 from mailshot.models import Message
@@ -10,7 +12,7 @@ class Command(BaseCommand):
 
     def handle(self, *args, **kwargs):
         messages = Message.objects.filter(
-            Q(STATUS="COMPLETE"), Q(start_date__gt=timezone.now().date()) | Q()
+            Q(STATUS="COMPLETE"), Q(start_date__gt=timezone.now().date())
         )
         for message in messages:
 

@@ -2,8 +2,8 @@ import secrets
 
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.core.mail import send_mail
-from django.shortcuts import get_object_or_404
-from django.urls import reverse_lazy
+from django.shortcuts import get_object_or_404, redirect, render
+from django.urls import reverse, reverse_lazy
 from django.views.generic import CreateView, ListView, UpdateView
 
 from config.settings import EMAIL_HOST_USER
@@ -45,8 +45,10 @@ class UserUpdateView(LoginRequiredMixin, UpdateView):
 
 def view_profile(request):
     user = request.user
-    context = {"user": user}
-    return render(request, context, template_name="mailshot/profile.html")
+    context = {
+        "user": user,
+    }
+    return render(request, context=context, template_name="users/profile.html")
 
 
 class UserListView(LoginRequiredMixin, ListView):

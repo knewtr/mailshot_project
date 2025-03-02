@@ -15,7 +15,7 @@ urlpatterns = [
     path("login/", LoginView.as_view(template_name="login.html"), name="login"),
     path("logout/", LogoutView.as_view(next_page="mailshot:home"), name="logout"),
     path("register/", UserCreateView.as_view(), name="register"),
-    path("email-verification/<str:token>", email_verification, name="email_verification"),
+    path("email-confirm/<str:token>", email_verification, name="email-confirm"),
     path("update/<int:pk>/", UserUpdateView.as_view(), name="user_update"),
     path("profile/", view_profile, name="profile"),
     path(

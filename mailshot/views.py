@@ -7,6 +7,7 @@ from django.views.generic import (CreateView, DeleteView, DetailView, ListView,
 
 from mailshot.forms import MailshotForm, MessageForm, RecipientForm
 from mailshot.models import Attempt, Mailshot, Message, Recipient
+from mailshot.services import MailshotService
 
 
 def home_view(request):
@@ -38,13 +39,13 @@ class RecipientListView(LoginRequiredMixin, ListView):
     model = Recipient
     template_name = "mailshot/recipient_list.html"
 
-    def get_queryset(self):
-        if not self.request.user.has_perm("can_view_recipient_list"):
-            return Mailshot.caching(
-                super().get_queryset(), self.model, self.request.user
-            )
-        else:
-            return Mailshot.caching(super().get_queryset(), self.model)
+    # def get_queryset(self):
+    #     if not self.request.user.has_perm("can_view_recipient_list"):
+    #         return MailshotService.caching(
+    #             super().get_queryset(), self.model, self.request.user
+    #         )
+    #     else:
+    #         return MailshotService.caching(super().get_queryset(), self.model)
 
 
 class RecipientDetailView(LoginRequiredMixin, DetailView):
@@ -86,15 +87,12 @@ class MessageCreateView(LoginRequiredMixin, CreateView):
 
 class MessageListView(LoginRequiredMixin, ListView):
     model = Message
-    template_name = "mailshot/message_list.html"
 
-    def get_queryset(self):
-        if not self.request.user.has_perm("can_view_message_list"):
-            return Mailshot.caching(
-                super().get_queryset(), self.model, self.request.user
-            )
-        else:
-            return Mailshot.caching(super().get_queryset(), self.model)
+    # def get_queryset(self):
+    #     if not self.request.user.has_perm('can_view_message_list'):
+    #         return MailshotService.caching(super().get_queryset(), self.model, self.request.user)
+    #     else:
+    #         return MailshotService.caching(super().get_queryset(), self.model)
 
 
 class MessageDetailView(LoginRequiredMixin, DetailView):

@@ -52,8 +52,8 @@ class Mailshot(models.Model):
         (COMPLETED, "Завершена"),
         (STARTED, "Запущена"),
     )
-    first_mailshot = models.DateTimeField(verbose_name="Первая отправка")
-    last_mailshot = models.DateTimeField(verbose_name="Окончание отправки")
+    start_mailshot = models.DateTimeField(verbose_name="Первая отправка")
+    end_mailshot = models.DateTimeField(verbose_name="Окончание отправки")
     status = models.CharField(
         max_length=10, choices=STATUS_CHOICES, verbose_name="Статус"
     )
@@ -83,7 +83,7 @@ class Attempt(models.Model):
         (FAILURE, "Не успешно"),
     )
 
-    try_time = models.DateTimeField(verbose_name="Время попытки")
+    created_at = models.DateTimeField(verbose_name="Время попытки")
     status = models.CharField(
         max_length=20, choices=STATUS_CHOICES, verbose_name="Статус"
     )

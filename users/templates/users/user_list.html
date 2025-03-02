@@ -17,7 +17,8 @@
                           <a class="btn btn-primary" href="{% url 'users:users_detail' user.pk %}" role="button">Посмотреть профиль</a>
                           <a class="btn btn-primary" href="{% url 'users:users_update' user.pk %}" role="button">Редактировать профиль</a>
                           {% if perms.user.can_block_user %}
-                          <a class="btn btn-danger" href="{% url 'users:users_confirm_block' user.pk %}" role="button">Блокировать пользователя</a>
+                          <a class="btn btn-danger" href="{% url 'users:block_user' user.pk %}" role="button">Заблокировать пользователя</a>
+                          {% endif %}
                         </div>
                     </div>
                 </div>

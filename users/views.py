@@ -1,6 +1,7 @@
 import secrets
 
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.core.exceptions import PermissionDenied
 from django.core.mail import send_mail
 from django.shortcuts import get_object_or_404, redirect, render
 from django.urls import reverse, reverse_lazy
@@ -19,14 +20,15 @@ class UserCreateView(CreateView):
     def form_valid(self, form):
         user = form.save()
         user.is_active = False
-        token = secrets.token_hex()
+        user.token = secrets.token_hex(16)
+        user.save()
         host = self.request.get_host()
-        url = f"http://{host}/users/email-confirm/{token}/"
+        url = f"http://{host}/users/email-verification/{user.token}/"
         send_mail(
             subject="Подтверждение почты",
             message=f"Перейдите по ссылке, чтобы подтвердить почту: {url}",
             from_email=EMAIL_HOST_USER,
-            recipient_list=[user.email],
+            recipient_list=[user.email,],
         )
         return super().form_valid(form)
 
@@ -41,6 +43,16 @@ class UserUpdateView(LoginRequiredMixin, UpdateView):
     model = User
     form_class = UserUpdateForm
     success_url = reverse_lazy("mailshot:home")
+
+    @staticmethod
+    def block_user(request, pk):
+        block_user = User.objects.get(pk=pk)
+        if not request.user.has_per("users.can_block_user"):
+            raise PermissionDenied
+        else:
+            block_user.is_active = False
+            block_user.save()
+        return redirect(reverse("mailshot:home"))
 
 
 def view_profile(request):

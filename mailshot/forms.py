@@ -16,7 +16,7 @@ class StyleFormMixin:
 class MessageForm(StyleFormMixin, ModelForm):
     class Meta:
         model = Message
-        fields = ("title", "content")
+        fields = ("theme", "content")
 
 
 class RecipientForm(StyleFormMixin, ModelForm):
@@ -28,4 +28,4 @@ class RecipientForm(StyleFormMixin, ModelForm):
 class MailshotForm(StyleFormMixin, ModelForm):
     class Meta:
         model = Mailshot
-        fields = ("first_mailshot", "last_mailshot", "status", "message", "recipient")
+        fields = ("start_mailshot", "end_mailshot", "status", "message", "recipient")

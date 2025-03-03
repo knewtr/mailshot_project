@@ -39,14 +39,11 @@ class RecipientListView(LoginRequiredMixin, ListView):
     model = Recipient
     template_name = "mailshot/recipient_list.html"
 
-    # def get_queryset(self):
-    #     if not self.request.user.has_perm("can_view_recipient_list"):
-    #         return MailshotService.caching(
-    #             super().get_queryset(), self.model, self.request.user
-    #         )
-    #     else:
-    #         return MailshotService.caching(super().get_queryset(), self.model)
-
+    def get_queryset(self):
+        if not self.request.user.has_perm('can_view_recipient_list'):
+            return MailshotService.caching(super().get_queryset(), self.model, self.request.user)
+        else:
+            return MailshotService.caching(super().get_queryset(), self.model)
 
 class RecipientDetailView(LoginRequiredMixin, DetailView):
     model = Recipient
@@ -88,11 +85,11 @@ class MessageCreateView(LoginRequiredMixin, CreateView):
 class MessageListView(LoginRequiredMixin, ListView):
     model = Message
 
-    # def get_queryset(self):
-    #     if not self.request.user.has_perm('can_view_message_list'):
-    #         return MailshotService.caching(super().get_queryset(), self.model, self.request.user)
-    #     else:
-    #         return MailshotService.caching(super().get_queryset(), self.model)
+    def get_queryset(self):
+        if not self.request.user.has_perm('can_view_message_list'):
+            return MailshotService.caching(super().get_queryset(), self.model, self.request.user)
+        else:
+            return MailshotService.caching(super().get_queryset(), self.model)
 
 
 class MessageDetailView(LoginRequiredMixin, DetailView):
@@ -195,5 +192,5 @@ class StatisticsView(TemplateView):
         context["successful"] = successful
         context["failed"] = failed
         context["mailshot_count"] = mailshot_count
-        context["attempts"] = attempts
+        context["attempts"] = attempts.count()
         return context

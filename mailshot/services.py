@@ -54,10 +54,10 @@ class MailshotService:
     def caching(queryset, model, user=None):
         if not CACHE_ENABLED:
             return queryset.filter(owner=user)
-        key = f"{model.__name__}_list"
+        key = str(model) + "_list"
         objects = cache.get(key)
         if objects is not None:
             return objects
-        objects = list(queryset.filter(owner=user))
-        cache.set(key, objects, timeout=60 * 15)
+        objects = queryset.filter(owner=user)
+        cache.set(key, objects, 60 * 1)
         return objects

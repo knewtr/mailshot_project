@@ -28,6 +28,9 @@
             {% if user.is_authenticated %}
             <li><a href="{% url 'users:profile' %}" class="text-white">Профиль</a></li>
             <li><a href="{% url 'users:user_update' user.pk %}" class="text-white">Редактировать профиль</a></li>
+            {% if "users.view_user" in perms%}
+              <li><a href="{% url 'users:user_list' %}" class="text-white">Список пользователей</a></li>
+            {% endif %}
             <li>
                 <form method="post" action="{% url 'users:logout' %}" style="display:inline">
                     {% csrf_token %}

@@ -1,12 +1,15 @@
 from django.urls import path
 
 from mailshot.apps import MailshotConfig
-from mailshot.views import (MailshotListView, MessageCreateView,
-                            MessageDeleteView, MessageDetailView,
-                            MessageListView, MessageUpdateView,
-                            RecipientCreateView, RecipientDeleteView,
-                            RecipientDetailView, RecipientListView,
-                            RecipientUpdateView, StatisticsView, home_view)
+from mailshot.services import MailshotService
+from mailshot.views import (MailshotCreateView, MailshotDeleteView,
+                            MailshotListView, MailshotUpdateView,
+                            MessageCreateView, MessageDeleteView,
+                            MessageDetailView, MessageListView,
+                            MessageUpdateView, RecipientCreateView,
+                            RecipientDeleteView, RecipientDetailView,
+                            RecipientListView, RecipientUpdateView,
+                            StatisticsView, home_view)
 
 app_name = MailshotConfig.name
 
@@ -39,6 +42,22 @@ urlpatterns = [
         name="message_confirm_delete",
     ),
     path("mailshot/list/", MailshotListView.as_view(), name="mailshot_list"),
-    path("attempt/list/", MailshotListView.as_view(), name="mailshot_list"),
     path("mailshot/statistics/", StatisticsView.as_view(), name="statistics"),
+    path(
+        "mailshot/<int:pk>/stop/",
+        MailshotUpdateView.stop_mailshot,
+        name="stop_mailshot",
+    ),
+    path(
+        "mailshot/update/<int:pk>", MailshotUpdateView.as_view(), name="mailshot_update"
+    ),
+    path("mailshot/create/", MailshotCreateView.as_view(), name="mailshot_create"),
+    path(
+        "mailshot/<int:pk>/send/", MailshotService.send_mailshot, name="send_mailshot"
+    ),
+    path(
+        "mailshot/<int:pk>/delete/",
+        MailshotDeleteView.as_view(),
+        name="mailshot_confirm_delete",
+    ),
 ]

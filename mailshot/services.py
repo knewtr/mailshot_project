@@ -17,20 +17,20 @@ class MailshotService:
         mailshot = Mailshot.objects.get(pk=pk)
         subject = mailshot.message.theme
         message = mailshot.message.content
-        recipient = [recipient.email for recipient in mailshot.recipient.all()]
+        recipients = [recipient.email for recipient in mailshot.recipients.all()]
 
         started_at = timezone.now()
 
         try:
-            response = send_mail(subject, message, EMAIL_HOST_USER, recipient)
-        except smtplib.SMTPExceptions as e:
-            Mailshot.make_attempt(status="failure", response=e, mailshot=mailshot)
+            response = send_mail(subject, message, EMAIL_HOST_USER, recipient, fail_silently=False)
+        except smtplib.SMTPException as e:
+            MailshotService.make_attempt(status="failure", response=e, mailshot=mailshot)
         else:
             ended_at = timezone.now()
-            Mailshot.make_attempt(
+            MailshotService.make_attempt(
                 status="success", response=response, mailshot=mailshot
             )
-            Mailshot.update_status(
+            MailshotService.update_status(
                 mailshot=mailshot, started_at=started_at, ended_at=ended_at
             )
         finally:

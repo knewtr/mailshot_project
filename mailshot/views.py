@@ -120,8 +120,8 @@ class MessageDeleteView(LoginRequiredMixin, DeleteView):
 
 
 class MailshotCreateView(LoginRequiredMixin, CreateView):
-    model = Message
-    fields = ("first_mailshot", "last_mailshot", "status", "message", "recipient")
+    model = Mailshot
+    fields = ("start_mailshot", "end_mailshot", "status", "message", "recipients")
     success_url = reverse_lazy("mailshot:mailshot_list")
 
     def form_valid(self, form):
@@ -133,16 +133,16 @@ class MailshotCreateView(LoginRequiredMixin, CreateView):
 
 
 class MailshotListView(LoginRequiredMixin, ListView):
-    model = Message
+    model = Mailshot
     template_name = "mailshot/mailshot_list.html"
 
 
 class MailshotDetailView(LoginRequiredMixin, DetailView):
-    model = Message
+    model = Mailshot
 
 
 class MailshotUpdateView(LoginRequiredMixin, UpdateView):
-    model = Message
+    model = Mailshot
     fields = ("theme", "content")
 
     def get_success_url(self):
@@ -157,7 +157,7 @@ class MailshotUpdateView(LoginRequiredMixin, UpdateView):
     @staticmethod
     def stop_mailshot(request, pk):
         stopped_mailshot = Mailshot.objects.get(pk=pk)
-        if not request.user.has_per("mailshot.can_stop_mailshot"):
+        if not request.user.has_perm("mailshot.can_stop_mailshot"):
             raise PermissionDenied
         else:
             stopped_mailshot.status = "completed"
@@ -166,7 +166,7 @@ class MailshotUpdateView(LoginRequiredMixin, UpdateView):
 
 
 class MailshotDeleteView(LoginRequiredMixin, DeleteView):
-    model = Message
+    model = Mailshot
     template_name = "mailshot/mailshot_confirm_delete.html"
     success_url = reverse_lazy("mailshot:mailshot_list")
 

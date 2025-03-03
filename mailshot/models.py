@@ -52,20 +52,21 @@ class Mailshot(models.Model):
         (COMPLETED, "Завершена"),
         (STARTED, "Запущена"),
     )
-    start_mailshot = models.DateTimeField(verbose_name="Первая отправка")
-    end_mailshot = models.DateTimeField(verbose_name="Окончание отправки")
+    start_mailshot = models.DateTimeField(verbose_name="Первая отправка", null=True, blank=True)
+    end_mailshot = models.DateTimeField(verbose_name="Окончание отправки", null=True, blank=True)
     status = models.CharField(
         max_length=10, choices=STATUS_CHOICES, verbose_name="Статус"
     )
-    message = models.ForeignKey("Message", on_delete=models.CASCADE)
-    recipient = models.ManyToManyField("Recipient")
+    message = models.ForeignKey("Message", on_delete=models.CASCADE, verbose_name='Сообщение', related_name='mailings')
+    recipients = models.ManyToManyField("Recipient", verbose_name='Получатели рассылки')
     owner = models.ForeignKey(
-        User, verbose_name="Владелец", on_delete=models.SET_NULL, blank=True, null=True
+        User, verbose_name="Владелец", on_delete=models.CASCADE, related_name='mailing', blank=True, null=True
     )
 
     class Meta:
         verbose_name = "рассылка"
         verbose_name_plural = "рассылки"
+        ordering = ["message", "owner"]
         permissions = [
             ("can_stop_mailshot", "Can stop mailshot"),
         ]
@@ -88,7 +89,7 @@ class Attempt(models.Model):
         max_length=20, choices=STATUS_CHOICES, verbose_name="Статус"
     )
     response = models.TextField(verbose_name="Ответ сервера")
-    mailshot = models.ForeignKey("Mailshot", on_delete=models.CASCADE)
+    mailshot = models.ForeignKey("Mailshot", on_delete=models.CASCADE, verbose_name="Рассылка", related_name="attempt")
 
     class Meta:
         verbose_name = "попытка рассылки"

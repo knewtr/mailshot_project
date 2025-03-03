@@ -6,16 +6,16 @@ from django.contrib.auth.views import (LoginView, LogoutView,
 from django.urls import path, reverse_lazy
 
 from users.apps import UsersConfig
-from users.views import (UserCreateView, UserUpdateView, email_verification,
-                         view_profile, UserListView)
+from users.views import (UserCreateView, UserListView, UserUpdateView,
+                         email_verification, view_profile)
 
 app_name = UsersConfig.name
 
 urlpatterns = [
-    path("login/", LoginView.as_view(template_name="login.html"), name="login"),
+    path("login/", LoginView.as_view(template_name="users/login.html"), name="login"),
     path("logout/", LogoutView.as_view(next_page="mailshot:home"), name="logout"),
     path("register/", UserCreateView.as_view(), name="register"),
-    path("email-confirm/<str:token>", email_verification, name="email-confirm"),
+    path("email-confirm/<str:token>/", email_verification, name="email-confirm"),
     path("update/<int:pk>/", UserUpdateView.as_view(), name="user_update"),
     path("profile/", view_profile, name="profile"),
     path(
@@ -49,6 +49,6 @@ urlpatterns = [
         ),
         name="password_reset_complete",
     ),
-    path("user/list", UserListView.as_view(), name='user_list'),
-    path("user/<int:pk>/block/", UserUpdateView.block_user, name='block_user'),
+    path("user/list", UserListView.as_view(), name="user_list"),
+    path("user/<int:pk>/block/", UserUpdateView.block_user, name="block_user"),
 ]

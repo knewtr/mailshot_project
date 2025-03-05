@@ -4,6 +4,9 @@
 <div class="list-unstyled ps-0">
     <div class="container">
         <h2>Рассылки</h2>
+        <div class="d-flex justify-content-end">
+           <a type="button" class="btn btn-outline-primary" href="{% url 'mailshot:mailshot_create' %}">Новая рассылка</a>
+        </div>
         <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
             {% for mailshot in object_list %}
             <div class="card-body">
@@ -16,12 +19,18 @@
                 {% endfor %}
                 <p class="card-text">{{ mailshot.status }}</p>
                 {% if perms.mailshot.can_stop_mailshot %}
-                <a type="button" class="btn btn-outline-primary" href="{% url 'mailshot:stop_mailshot' pk=mailshot.pk %}">Остановить рассылку</a>
+                <a type="button" class="btn btn-outline-primary btn-sm"
+                   href="{% url 'mailshot:stop_mailshot' pk=mailshot.pk %}">Остановить рассылку</a>
+                {% endif %}
+                {% if user == mailshot.owner %}
+                <a class="btn btn-primary btn-sm" href="{% url 'mailshot:mailshot_detail' mailshot.pk %}">Посмотреть</a>
+                <a class="btn btn-primary btn-sm" href="{% url 'mailshot:mailshot_update' mailshot.pk %}" role="button">Редактировать</a>
+                <a class="btn btn-danger btn-sm" href="{% url 'mailshot:mailshot_confirm_delete' mailshot.pk %}"
+                   role="button">Удалить</a>
                 {% endif %}
             </div>
             {% endfor %}
         </div>
-        <a type="button" class="btn btn-outline-primary" href="{% url 'mailshot:mailshot_create' %}">Новая рассылка</a>
     </div>
 </div>
 {% endblock %}

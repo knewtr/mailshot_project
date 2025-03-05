@@ -19,19 +19,25 @@ class MailshotService:
         message = mailshot.message.content
         recipients = [recipient.email for recipient in mailshot.recipients.all()]
 
-        started_at = timezone.now()
+        start_mailshot = timezone.now()
 
         try:
-            response = send_mail(subject, message, EMAIL_HOST_USER, recipient, fail_silently=False)
+            response = send_mail(
+                subject, message, EMAIL_HOST_USER, recipients, fail_silently=False
+            )
         except smtplib.SMTPException as e:
-            MailshotService.make_attempt(status="failure", response=e, mailshot=mailshot)
+            MailshotService.make_attempt(
+                status="failure", response=e, mailshot=mailshot
+            )
         else:
-            ended_at = timezone.now()
+            end_mailshot = timezone.now()
             MailshotService.make_attempt(
                 status="success", response=response, mailshot=mailshot
             )
             MailshotService.update_status(
-                mailshot=mailshot, started_at=started_at, ended_at=ended_at
+                mailshot=mailshot,
+                start_mailshot=start_mailshot,
+                end_mailshot=end_mailshot,
             )
         finally:
             return redirect(reverse("mailshot:mailshot_list"))
@@ -44,9 +50,9 @@ class MailshotService:
         attempt.save()
 
     @staticmethod
-    def update_status(mailshot, started_at, ended_at):
-        mailshot.start_mailshot = started_at
-        mailshot.end_mailshot = ended_at
+    def update_status(mailshot, start_mailshot, end_mailshot):
+        mailshot.start_mailshot = timezone.localtime(start_mailshot)
+        mailshot.end_mailshot = timezone.localtime(end_mailshot)
         mailshot.status = "completed"
         mailshot.save()
 

@@ -4,15 +4,15 @@ from django.db.models import Q
 from django.utils import timezone
 
 from config.settings import EMAIL_HOST_USER
-from mailshot.models import Message
+from mailshot.models import Mailshot, Message
 
 
 class Command(BaseCommand):
-    help = "Делает рассылку"
+    help = "Делает рассылку через консоль"
 
     def handle(self, *args, **kwargs):
-        messages = Message.objects.filter(
-            Q(STATUS="COMPLETE"), Q(start_date__gt=timezone.now().date())
+        messages = Mailshot.objects.filter(
+            Q(status="created"), Q(start_mailshot__gt=timezone.now().date())
         )
         for message in messages:
 
@@ -20,8 +20,8 @@ class Command(BaseCommand):
                 subject=Message.theme,
                 message=Message.content,
                 from_email=EMAIL_HOST_USER,
-                recipient_list=[Message.recipient],
+                recipient_list=[Mailshot.recipients],
             )
             message.is_sent = True
             message.save()
-            self.stdout.write(self.style.SUCCESS(f"Отправлено: {message.subject}"))
+            self.stdout.write(self.style.SUCCESS(f"Отправлено: {message.theme}"))

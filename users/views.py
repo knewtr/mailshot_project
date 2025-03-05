@@ -45,7 +45,14 @@ def email_verification(request, token):
 class UserUpdateView(LoginRequiredMixin, UpdateView):
     model = User
     form_class = UserUpdateForm
-    success_url = reverse_lazy("mailshot:home")
+    success_url = reverse_lazy("users:profile")
+
+    def get_form_class(self):
+        return UserUpdateForm
+
+    def form_valid(self, form):
+        self.object = form.save()
+        return super().form_valid(form)
 
     @staticmethod
     def block_user(request, pk):

@@ -7,18 +7,21 @@
         <h2>Список пользователей</h2>
         <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
             {% for user in object_list %}
-                <div class="card shadow-sm">
-                    <img src="{{ user.avatar | media_filter }}">
-                    <div class="card-body">
-                        <p class="card-text">{{ user.email }}</p>
-                        <p class="card-text">{{ user.phone_number }}</p>
-                        <p class="card-text">{{ user.country }}</p>
-                        <p class="card-text">{{ user.is_blocked }}</p>
-                    <div class="d-flex justify-content-between align-items-center">
-                        <div class="btn-group">
-                          {% if perms.users.can_block_user %}
-                          <a class="btn btn-danger" href="{% url 'users:block_user' user.pk %}" role="button">Заблокировать пользователя</a>
-                          {% endif %}
+                <div class="col">
+                    <div class="card shadow-sm">
+                        <img src="{{ user.avatar | media_filter }}" class="card-img-top" alt="Avatar пользователя">
+                        <div class="card-body">
+                            <p class="card-text"><strong>Email:</strong> {{ user.email }}</p>
+                            <p class="card-text"><strong>Телефон:</strong> {{ user.phone_number }}</p>
+                            <p class="card-text"><strong>Страна:</strong> {{ user.country }}</p>
+                            <p class="card-text"><strong>Заблокирован:</strong> {{ user.is_blocked }}</p>
+                            <div class="d-flex justify-content-between align-items-center">
+                                <div class="btn-group">
+                                    {% if perms.users.can_block_user %}
+                                    <a class="btn btn-danger" href="{% url 'users:block_user' user.pk %}" role="button">Заблокировать пользователя</a>
+                                    {% endif %}
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>

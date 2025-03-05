@@ -16,7 +16,7 @@ urlpatterns = [
     path("logout/", LogoutView.as_view(next_page="mailshot:home"), name="logout"),
     path("register/", UserCreateView.as_view(), name="register"),
     path("email-confirm/<str:token>/", email_verification, name="email-confirm"),
-    path("update/<int:pk>/", UserUpdateView.as_view(), name="user_update"),
+    path("update/<int:pk>/", UserUpdateView.as_view(), name="user_detail"),
     path("profile/", view_profile, name="profile"),
     path(
         "password-reset/",

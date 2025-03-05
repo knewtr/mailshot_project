@@ -39,11 +39,12 @@ class RecipientListView(LoginRequiredMixin, ListView):
     model = Recipient
     template_name = "mailshot/recipient_list.html"
 
-    def get_queryset(self):
-        if not self.request.user.has_perm('can_view_recipient_list'):
-            return MailshotService.caching(super().get_queryset(), self.model, self.request.user)
-        else:
-            return MailshotService.caching(super().get_queryset(), self.model)
+    # def get_queryset(self):
+    #     if not self.request.user.has_perm('can_view_recipient_list'):
+    #         return MailshotService.caching(super().get_queryset(), self.model, self.request.user)
+    #     else:
+    #         return MailshotService.caching(super().get_queryset(), self.model)
+
 
 class RecipientDetailView(LoginRequiredMixin, DetailView):
     model = Recipient
@@ -85,11 +86,11 @@ class MessageCreateView(LoginRequiredMixin, CreateView):
 class MessageListView(LoginRequiredMixin, ListView):
     model = Message
 
-    def get_queryset(self):
-        if not self.request.user.has_perm('can_view_message_list'):
-            return MailshotService.caching(super().get_queryset(), self.model, self.request.user)
-        else:
-            return MailshotService.caching(super().get_queryset(), self.model)
+    # def get_queryset(self):
+    #     if not self.request.user.has_perm('can_view_message_list'):
+    #         return MailshotService.caching(super().get_queryset(), self.model, self.request.user)
+    #     else:
+    #         return MailshotService.caching(super().get_queryset(), self.model)
 
 
 class MessageDetailView(LoginRequiredMixin, DetailView):
@@ -118,7 +119,8 @@ class MessageDeleteView(LoginRequiredMixin, DeleteView):
 
 class MailshotCreateView(LoginRequiredMixin, CreateView):
     model = Mailshot
-    fields = ("start_mailshot", "end_mailshot", "status", "message", "recipients")
+    form_class = MailshotForm
+    # fields = ("start_mailshot", "end_mailshot", "status", "message", "recipients")
     success_url = reverse_lazy("mailshot:mailshot_list")
 
     def form_valid(self, form):
@@ -166,6 +168,14 @@ class MailshotDeleteView(LoginRequiredMixin, DeleteView):
     model = Mailshot
     template_name = "mailshot/mailshot_confirm_delete.html"
     success_url = reverse_lazy("mailshot:mailshot_list")
+
+    def get_form_class(self):
+        user = self.request.user
+        if self.object.owner == user:
+            return MailshotForm
+        if user.has_perms(["mailshot.can_delete_mailshot"]):
+            return MailshotForm
+        raise PermissionDenied
 
 
 class StatisticsView(TemplateView):

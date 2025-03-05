@@ -9,7 +9,7 @@ from mailshot.views import (MailshotCreateView, MailshotDeleteView,
                             MessageUpdateView, RecipientCreateView,
                             RecipientDeleteView, RecipientDetailView,
                             RecipientListView, RecipientUpdateView,
-                            StatisticsView, home_view)
+                            StatisticsView, home_view, MailshotDetailView,)
 
 app_name = MailshotConfig.name
 
@@ -60,4 +60,5 @@ urlpatterns = [
         MailshotDeleteView.as_view(),
         name="mailshot_confirm_delete",
     ),
+    path("mailshot/<int:pk>/", MailshotDetailView.as_view(), name="mailshot_detail"),
 ]

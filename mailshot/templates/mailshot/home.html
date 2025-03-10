@@ -1,0 +1,23 @@
+{% extends 'mailshot/base.html' %}
+{%block title%}Главная{% endblock %}
+{%block content%}
+<div class="pricing-header px-2 pb-md-4 text-center">
+{% if user.is_authenticated %}
+     <h3>Добро пожаловать, {{ user.email }}!</h3>
+{% else %}
+    <h3>Добро пожаловать на наш сервис рассылок!</h3>
+    <h5>Для работы с сервисом необходима регистрация или авторизация</h5>
+</div>
+{% endif %}
+{% if user.is_authenticated %}
+<div class="container">
+      <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+          <div class="statistics">
+              <p>Количество всех расссылок: {{ mailshots }}</p>
+              <p>Колличество активных рассылок: {{ started_mailshots }}</p>
+              <p>Количество уникальных получателей: {{ recipients }}</p>
+          </div>
+      </div>
+</div>
+{% endif %}
+{% endblock %}

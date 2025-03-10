@@ -1,0 +1,25 @@
+[tool.poetry]
+name = "mailshot-project"
+version = "0.1.0"
+description = ""
+authors = ["Your Name <you@example.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.12"
+django = "^5.1.5"
+psycopg2-binary = "^2.9.10"
+pillow = "^11.1.0"
+python-dotenv = "^1.0.1"
+redis = "^5.2.1"
+ipython = "^9.0.0"
+
+
+[tool.poetry.group.lint.dependencies]
+black = "^24.10.0"
+isort = "^5.13.2"
+flake8 = "^7.1.2"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
